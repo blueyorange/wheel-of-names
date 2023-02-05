@@ -6,85 +6,47 @@
   --sliceHeight: calc(var(--circumference) / var(--numberOfSlices));
   --offset: calc(var(--sliceHeight) / 2);
 }
-body {
-  font-family: sans-serif;
-}
 .names {
   list-style: none;
   padding: 0;
   margin: 0;
-  z-index: 200;
-  border-radius: 100%;
   height: var(--diameter);
   width: var(--diameter);
   position: absolute;
-  border: 1px solid black;
+  border-radius: 100%;
   overflow: hidden;
 }
-.slice {
-  border: none;
-  box-sizing: border-box;
-  position: absolute;
-  transform-origin: left center;
-  text-align: right;
-  height: var(--sliceHeight);
-  position: absolute;
-  width: 50%;
-  left: 50%;
-  top: calc(50% - var(--offset));
-  color: white;
-  padding-left: 0;
-}
-.slice::before,
-.slice::after {
-  content: "";
+.name {
+  background-color: blue;
   display: block;
-  border-style: solid;
-  width: 0;
-  height: 0;
-  margin-bottom: -1px;
-}
-.slice::before {
-  border-width: 0 0 calc(var(--sliceHeight) / 2) var(--radius);
-  border-color: transparent transparent blue transparent;
-}
-.slice::after {
-  border-width: calc(var(--sliceHeight) / 2) 0 0 var(--radius);
-  border-color: blue transparent transparent transparent;
-}
-.label {
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  width: var(--radius);
+  height: var(--sliceHeight);
   line-height: var(--sliceHeight);
-  width: 80%;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  font-size: 2em;
-  text-align: right;
-  padding-left: 20px;
+  color: white;
+  border: 1px solid white;
+  clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
+  transform-origin: left center;
+  position: absolute;
+  text-align: center;
+  padding-left: 4px;
+  left: 50%;
+  top: calc(50% - var(--sliceHeight) / 2);
 }
-.slice:nth-child(even):before {
-  border-color: transparent transparent red transparent;
-}
-.slice:nth-child(even):after {
-  border-color: red transparent transparent transparent;
-}
-.slice:nth-child(1) {
+.name:nth-child(1) {
   transform: rotate(0deg);
 }
-.slice:nth-child(2) {
+.name:nth-child(2) {
   transform: rotate(60deg);
 }
-.slice:nth-child(3) {
+.name:nth-child(3) {
   transform: rotate(120deg);
 }
-.slice:nth-child(4) {
+.name:nth-child(4) {
   transform: rotate(180deg);
 }
-.slice:nth-child(5) {
+.name:nth-child(5) {
   transform: rotate(240deg);
 }
-.slice:nth-child(6) {
+.name:nth-child(6) {
   transform: rotate(300deg);
 }
