@@ -28,7 +28,7 @@
   transform-origin: left center;
   position: absolute;
   text-align: center;
-  padding-left: 4px;
+  padding-left: 3px;
   left: 50%;
   top: calc(50% - var(--sliceHeight) / 2);
 }

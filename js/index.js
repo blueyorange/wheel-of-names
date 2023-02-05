@@ -1,4 +1,4 @@
-import courses from "./names.js";
+import courses from "../names.js";
 
 const dom = {
   app: document.querySelector("#app"),
@@ -6,7 +6,7 @@ const dom = {
   namesUl: app.querySelector(".names"),
 };
 
-const courseSelectEl = courses.forEach((course) => {
+courses.forEach((course) => {
   const newOptionElement = document.createElement("option");
   newOptionElement.value = course.name;
   newOptionElement.innerText = course.name;
