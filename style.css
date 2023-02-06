@@ -1,7 +1,7 @@
 :root {
-  --diameter: 500px;
+  --diameter: 700px;
   --radius: calc(var(--diameter) / 2);
-  --circumference: calc(6.28 * var(--radius));
+  --circumference: calc(6.9 * var(--radius));
   --numberOfSlices: 6;
   --sliceHeight: calc(var(--circumference) / var(--numberOfSlices));
   --offset: calc(var(--sliceHeight) / 2);
@@ -9,7 +9,12 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
-.names {
+
+.wheelapp ul {
+  list-style: none;
+}
+
+.wheelapp .wheel {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -19,7 +24,7 @@ body {
   border-radius: 100%;
   overflow: hidden;
 }
-.name {
+.wheelapp .slice {
   background-color: blue;
   display: block;
   width: var(--radius);
@@ -36,21 +41,21 @@ body {
   font-size: 1.5em;
   top: calc(50% - var(--sliceHeight) / 2);
 }
-.name:nth-child(1) {
+.slice:nth-child(1) {
   transform: rotate(0deg);
 }
-.name:nth-child(2) {
+.slice:nth-child(2) {
   transform: rotate(60deg);
 }
-.name:nth-child(3) {
+.slice:nth-child(3) {
   transform: rotate(120deg);
 }
-.name:nth-child(4) {
+.slice:nth-child(4) {
   transform: rotate(180deg);
 }
-.name:nth-child(5) {
+.slice:nth-child(5) {
   transform: rotate(240deg);
 }
-.name:nth-child(6) {
+.slice:nth-child(6) {
   transform: rotate(300deg);
 }

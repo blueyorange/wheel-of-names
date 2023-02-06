@@ -1,25 +1,33 @@
-import courses from "../names.js";
+import NamesModelFactory from "./names-model.js";
 
-const dom = {
-  app: document.querySelector("#app"),
-  courseSelect: app.querySelector("#courseSelector"),
-  namesUl: app.querySelector(".names"),
-};
+const model = NamesModelFactory({
+  onAdd: function (name) {
+    const form = document
+      .querySelector(".names template")
+      .content.cloneNode(true).firstElementChild;
+    form.name = `#${name}`;
+    form.elements.name.value = name;
+    form.elements.destroy.addEventListener("click", () =>
+      model.deleteName(name)
+    );
+    document.querySelector(".names").appendChild(form);
+  },
 
-courses.forEach((course) => {
-  const newOptionElement = document.createElement("option");
-  newOptionElement.value = course.name;
-  newOptionElement.innerText = course.name;
-  dom.courseSelect.appendChild(newOptionElement);
+  onDelete: function (name) {
+    document.forms[`#${name}`].remove();
+  },
 });
 
-function addName(nameStr) {
-  const list = document.querySelector(".names");
-  const item = list.querySelector("template").content.cloneNode(true);
-  item.querySelector("label").innerText = nameStr;
-  list.appendChild(item);
-}
-
-const selectedCourse = courses[0];
-
-function populateList(names) {}
+window.addEventListener("submit", (e) => e.preventDefault(), { capture: true });
+document.forms.newName.addEventListener(
+  "submit",
+  ({
+    target: {
+      elements: {
+        name: { value },
+      },
+    },
+  }) => {
+    model.addName(value);
+  }
+);
