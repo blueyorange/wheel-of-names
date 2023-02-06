@@ -1,10 +1,13 @@
 :root {
   --diameter: 500px;
   --radius: calc(var(--diameter) / 2);
-  --circumference: calc(7 * var(--radius));
+  --circumference: calc(6.28 * var(--radius));
   --numberOfSlices: 6;
   --sliceHeight: calc(var(--circumference) / var(--numberOfSlices));
   --offset: calc(var(--sliceHeight) / 2);
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 .names {
   list-style: none;
@@ -28,8 +31,9 @@
   transform-origin: left center;
   position: absolute;
   text-align: center;
-  padding-left: 3px;
+  padding-right: 0;
   left: 50%;
+  font-size: 1.5em;
   top: calc(50% - var(--sliceHeight) / 2);
 }
 .name:nth-child(1) {
