@@ -29,5 +29,5 @@ export default function NamesModelFactory(client, options = {}) {
     client.onDelete(name);
     save();
   }
-  return { addName, deleteName };
+  return Object.freeze({ addName, deleteName });
 }
