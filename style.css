@@ -1,5 +1,5 @@
 :root {
-  --diameter: 450px;
+  --diameter: 490px;
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -11,6 +11,7 @@ body {
 
 .namesapp .names {
   list-style: none;
+  background-color: lightgrey;
   padding: 0;
   margin: 0;
   height: var(--diameter);
@@ -20,13 +21,19 @@ body {
   overflow: hidden;
   box-shadow: 5px 10px 8px #888888;
 }
-.namesapp .names::before {
+.namesapp .names::after {
+  content: "";
   z-index: 200;
-  position: relative;
+  margin: 0;
+  padding: 0;
   top: 50%;
-  width: 50px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 75px;
+  height: 75px;
   border-radius: 100%;
-  background-color: grey;
+  background-color: white;
 }
 .namesapp .names li {
   box-sizing: border-box;
@@ -35,11 +42,13 @@ body {
   height: var(--diameter);
   line-height: var(--diameter);
   color: white;
-  border: 1px solid white;
   transform-origin: center;
   position: absolute;
   text-align: right;
   padding-right: 15px;
   font-size: 1.5em;
+}
+.namesapp .names li:hover {
+  filter: brightness(150%);
 }
 
