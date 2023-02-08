@@ -1,10 +1,5 @@
 :root {
-  --diameter: 700px;
-  --radius: calc(var(--diameter) / 2);
-  --circumference: calc(6.9 * var(--radius));
-  --numberOfSlices: 6;
-  --sliceHeight: calc(var(--circumference) / var(--numberOfSlices));
-  --offset: calc(var(--sliceHeight) / 2);
+  --diameter: 450px;
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -14,7 +9,7 @@ body {
   list-style: none;
 }
 
-.wheelapp .wheel {
+.namesapp .names {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -23,39 +18,28 @@ body {
   position: absolute;
   border-radius: 100%;
   overflow: hidden;
+  box-shadow: 5px 10px 8px #888888;
 }
-.wheelapp .slice {
-  background-color: blue;
+.namesapp .names::before {
+  z-index: 200;
+  position: relative;
+  top: 50%;
+  width: 50px;
+  border-radius: 100%;
+  background-color: grey;
+}
+.namesapp .names li {
+  box-sizing: border-box;
   display: block;
-  width: var(--radius);
-  height: var(--sliceHeight);
-  line-height: var(--sliceHeight);
+  width: var(--diameter);
+  height: var(--diameter);
+  line-height: var(--diameter);
   color: white;
   border: 1px solid white;
-  clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
-  transform-origin: left center;
+  transform-origin: center;
   position: absolute;
-  text-align: center;
-  padding-right: 0;
-  left: 50%;
+  text-align: right;
+  padding-right: 15px;
   font-size: 1.5em;
-  top: calc(50% - var(--sliceHeight) / 2);
 }
-.slice:nth-child(1) {
-  transform: rotate(0deg);
-}
-.slice:nth-child(2) {
-  transform: rotate(60deg);
-}
-.slice:nth-child(3) {
-  transform: rotate(120deg);
-}
-.slice:nth-child(4) {
-  transform: rotate(180deg);
-}
-.slice:nth-child(5) {
-  transform: rotate(240deg);
-}
-.slice:nth-child(6) {
-  transform: rotate(300deg);
-}
+

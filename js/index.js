@@ -1,33 +1,30 @@
 import NamesModelFactory from "./names-model.js";
 
 const model = NamesModelFactory({
+  listEl: document.querySelector('.names'),
   onAdd(name) {
-    const list = document.querySelector(".names");
-    const form = list
-      .querySelector("template")
-      .content.cloneNode(true).firstElementChild;
-    form.name = `#${name}`;
-    form.elements.name.value = name;
-    form.elements.destroy.addEventListener("click", () =>
-      model.deleteName(name)
-    );
-    list.appendChild(form);
+    const newNameEl = document.createElement('li');
+    newNameEl.id=name;
+    newNameEl.innerText=name;
+    newNameEl.addEventListener('click', () => model.deleteName(name));
+    this.listEl.appendChild(newNameEl);
   },
 
   onDelete(name) {
-    document.forms[`#${name}`].remove();
+    this.listEl.querySelector(name).remove();
   },
 
-  onClearNames(names) {
-    names.forEach(name => this.onDelete(name));
+  onClearNames() {
+    [...this.listEl.children].forEach(el => el.remove());
   },
 
   onCountChange(count) {
-    document.documentElement.style.setProperty('--numberOfSlices', count);
-    let x = 50/(Math.tan(3.14/count));
-    // document.querySelector('.name').style.setProperty('clip-path', `polygon(0% 50%, ${x}% 0%, 0% 100%, 100% 100%, ${x}% 100%)`)
-    Array.from(document.querySelector('.names').children).forEach((child, n) => {
-      child.style.setProperty('transform', `rotate(${360*n/count}deg) skexX(${360*n/count})`)
+    Array.from(this.listEl.children).forEach((nameElement, n) => {
+      let x = 50*(1/Math.tan(3.14/count)+1);
+      nameElement.style.setProperty('clip-path', `polygon(50% 50%, ${x}% 0%, 100% 0%, 100% 100%, ${x}% 100%)`);
+      nameElement.style.setProperty('transform', `rotate(${6.28*n/count}rad)`);
+      let hue = Math.floor(360*n/6);
+      nameElement.style.setProperty('background-color', `hsl(${hue}, 100%, 20%)`);
     })
   }
 });
