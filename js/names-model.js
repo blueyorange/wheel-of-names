@@ -1,5 +1,3 @@
-const uuidv4 = () => new Date().valueOf();
-
 export default function NamesModelFactory(client, options = {}) {
   const { storageKey } = options || "names";
   let names = new Set();
@@ -14,6 +12,11 @@ export default function NamesModelFactory(client, options = {}) {
   function save() {
     console.log(JSON.stringify([...names]));
     localStorage.setItem(storageKey, JSON.stringify([...names]));
+    updateCount();
+  }
+
+  function updateCount() {
+    client.onCountChange(names.size);
   }
 
   function addName(name) {
@@ -29,5 +32,11 @@ export default function NamesModelFactory(client, options = {}) {
     client.onDelete(name);
     save();
   }
-  return Object.freeze({ addName, deleteName });
+
+  function clearNames() {
+    client.onClearNames([...names]);
+    names = new Set();
+    save();
+  }
+  return Object.freeze({ addName, deleteName, clearNames });
 }
