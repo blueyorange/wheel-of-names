@@ -11,7 +11,7 @@ const model = NamesModelFactory({
   },
 
   onDelete(name) {
-    this.listEl.querySelector(name).remove();
+    this.listEl.querySelector(`#${name}`).remove();
   },
 
   onClearNames() {
@@ -24,7 +24,7 @@ const model = NamesModelFactory({
       nameElement.style.setProperty('clip-path', `polygon(50% 50%, ${x}% 0%, 100% 0%, 100% 100%, ${x}% 100%)`);
       nameElement.style.setProperty('transform', `rotate(${6.28*n/count}rad)`);
       let hue = Math.floor(360*n/6);
-      nameElement.style.setProperty('background-color', `hsl(${hue}, 100%, 20%)`);
+      nameElement.style.setProperty('background-color', `hsl(${hue}, 100%, 30%)`);
     })
   }
 });
