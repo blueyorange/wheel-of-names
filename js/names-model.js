@@ -4,7 +4,6 @@ export default function NamesModelFactory(client, options = {}) {
   const asJson = localStorage.getItem(storageKey);
   if (asJson) {
     names = new Set(JSON.parse(asJson));
-    console.log(names);
     names.forEach((value, key) => {
       client.onAdd(key, value);
     });
@@ -40,5 +39,11 @@ export default function NamesModelFactory(client, options = {}) {
     names = new Set();
     save();
   }
-  return Object.freeze({ addName, deleteName, clearNames });
+
+  function selectName() {
+    const index = Math.floor(Math.random()*names.size);
+    const name = [...names][index];
+    client.onSelectName(name)
+  }
+  return Object.freeze({ addName, deleteName, clearNames, selectName });
 }

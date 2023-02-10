@@ -19,22 +19,36 @@ const model = NamesModelFactory({
   },
 
   onCountChange(count) {
-    Array.from(this.listEl.children).forEach((nameElement, n) => {
+    [...this.listEl.children].forEach((nameElement, n) => {
       let x = 50*(1/Math.tan(3.14/count)+1);
       nameElement.style.setProperty('clip-path', `polygon(50% 50%, ${x}% 0%, 100% 0%, 100% 100%, ${x}% 100%)`);
       nameElement.style.setProperty('transform', `rotate(${6.28*n/count}rad)`);
       let hue = Math.floor(360*n/6);
       nameElement.style.setProperty('background-color', `hsl(${hue}, 100%, 30%)`);
     })
+  },
+
+  onSelectName(name) {
+    const nameEl = this.listEl.querySelector(`#${name}`);
+    const index = [...this.listEl.children].indexOf(nameEl);
+    const angle = 20*Math.PI/(index+1);
+    console.log(`angle: ${angle}`);
+    document.querySelector(':root').style.setProperty('--turnAngle', `${angle}rad`);
+    this.listEl.classList.add('spin-wheel');
+    this.listEl.addEventListener('animationend', () => {
+      this.listEl.classList.remove('spin-wheel');
+      this.listEl.style.setProperty('transform', `rotate(${angle})`);
+    });
   }
 });
 
 window.addEventListener("submit", (e) => e.preventDefault(), { capture: true });
-document.querySelector('#clear-names').addEventListener('click', model.clearNames);
-document.forms.newName.addEventListener(
+document.forms.names.elements.clear.addEventListener('click', model.clearNames);
+document.forms.names.addEventListener(
   "submit",
   e => {
-    model.addName(e.target.elements.name.value);
-    e.target.elements.name.value = "";
+    model.addName(e.target.elements.add.value);
+    e.target.elements.add.value = "";
   }
 );
+document.forms.names.elements.spin.addEventListener('click', model.selectName)
