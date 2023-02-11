@@ -2,11 +2,12 @@ import NamesModelFactory from "./names-model.js";
 
 const model = NamesModelFactory({
   listEl: document.querySelector('.names'),
+  currAngle: 0,
   onAdd(name) {
     const newNameEl = document.createElement('li');
     newNameEl.id=name;
     newNameEl.innerText=name;
-    newNameEl.addEventListener('click', () => model.deleteName(name));
+    // newNameEl.addEventListener('click', () => model.deleteName(name));
     this.listEl.appendChild(newNameEl);
   },
 
@@ -28,16 +29,19 @@ const model = NamesModelFactory({
     })
   },
 
-  onSelectName(name) {
-    const nameEl = this.listEl.querySelector(`#${name}`);
-    const index = [...this.listEl.children].indexOf(nameEl);
-    const angle = 20*Math.PI/(index+1);
-    console.log(`angle: ${angle}`);
-    document.querySelector(':root').style.setProperty('--turnAngle', `${angle}rad`);
-    this.listEl.classList.add('spin-wheel');
+  onSelectName() {
+    console.log('clicked');
+    const endAngle = this.currAngle+2*Math.PI*Math.random();
+    console.log(`currAngle: ${this.currAngle}; endAngle: ${endAngle}`);
+    document.querySelector(':root').style.setProperty('--start-angle', `${this.currAngle}rad`);
+    document.querySelector(':root').style.setProperty('--end-angle', `${endAngle}rad`);
+    this.listEl.classList.remove('spin-wheel');
+    // this.listEl.offsetHeight;
+    setTimeout(() => {
+      this.listEl.classList.add('spin-wheel');
+    },1)
     this.listEl.addEventListener('animationend', () => {
-      this.listEl.classList.remove('spin-wheel');
-      this.listEl.style.setProperty('transform', `rotate(${angle})`);
+      this.currAngle = endAngle;
     });
   }
 });
