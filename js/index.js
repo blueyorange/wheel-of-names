@@ -30,18 +30,16 @@ const model = NamesModelFactory({
   },
 
   onSelectName() {
-    console.log('clicked');
-    const endAngle = this.currAngle+2*Math.PI*Math.random();
+    const endAngle = this.currAngle+10*2*Math.PI+2*Math.PI*Math.random();
     console.log(`currAngle: ${this.currAngle}; endAngle: ${endAngle}`);
     document.querySelector(':root').style.setProperty('--start-angle', `${this.currAngle}rad`);
     document.querySelector(':root').style.setProperty('--end-angle', `${endAngle}rad`);
     this.listEl.classList.remove('spin-wheel');
-    // this.listEl.offsetHeight;
     setTimeout(() => {
       this.listEl.classList.add('spin-wheel');
     },1)
     this.listEl.addEventListener('animationend', () => {
-      this.currAngle = endAngle;
+      this.currAngle = endAngle % 2*Math.PI;
     });
   }
 });
