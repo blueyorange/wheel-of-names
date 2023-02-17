@@ -1,6 +1,7 @@
 export default function NamesModelFactory(client, options = {}) {
   const { storageKey } = options || "names";
   let names = new Set();
+  let selected = null;
   const asJson = localStorage.getItem(storageKey);
   if (asJson) {
     names = new Set(JSON.parse(asJson));
@@ -40,10 +41,15 @@ export default function NamesModelFactory(client, options = {}) {
     save();
   }
 
-  function selectName() {
-    const index = Math.floor(Math.random()*names.size);
-    const name = [...names][index];
-    client.onSelectName(name)
+  function spinStart() {
+    const index = Math.floor(Math.random()*names.size)
+    console.log(index);
+    selected = [...names][index];
+    client.onSpinStart(index);
   }
-  return Object.freeze({ addName, deleteName, clearNames, selectName });
+
+  function spinEnd() {
+    client.onSpinEnd(selected);
+  }
+  return Object.freeze({ addName, deleteName, clearNames, spinStart, spinEnd });
 }

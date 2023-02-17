@@ -23,24 +23,32 @@ const model = NamesModelFactory({
     [...this.listEl.children].forEach((nameElement, n) => {
       let x = 50*(1/Math.tan(3.14/count)+1);
       nameElement.style.setProperty('clip-path', `polygon(50% 50%, ${x}% 0%, 100% 0%, 100% 100%, ${x}% 100%)`);
-      nameElement.style.setProperty('transform', `rotate(${6.28*n/count}rad)`);
+      nameElement.style.setProperty('transform', `rotate(${n/count}turn)`);
       let hue = Math.floor(360*n/6);
-      nameElement.style.setProperty('background-color', `hsl(${hue}, 100%, 30%)`);
+      nameElement.style.setProperty('background-color', `hsl(${hue}, 100%, 20%)`);
     })
   },
 
-  onSelectName() {
-    const endAngle = this.currAngle+10*2*Math.PI+2*Math.PI*Math.random();
+  onSpinStart(index) {
+    [...this.listEl.children].forEach(el => el.classList.remove('selected'))
+    const minimumTurns = 5;
+    const length = [...this.listEl.children].length;
+    const angleOffset = Math.random()/(2*length)-Math.random()/(4*length);
+    const endAngle = angleOffset-index/length+minimumTurns;
+    console.log('index', index);
     console.log(`currAngle: ${this.currAngle}; endAngle: ${endAngle}`);
-    document.querySelector(':root').style.setProperty('--start-angle', `${this.currAngle}rad`);
-    document.querySelector(':root').style.setProperty('--end-angle', `${endAngle}rad`);
+    document.querySelector(':root').style.setProperty('--start-angle', `${this.currAngle}turn`);
+    document.querySelector(':root').style.setProperty('--end-angle', `${endAngle}turn`);
+    this.currAngle = endAngle % 1;
     this.listEl.classList.remove('spin-wheel');
     setTimeout(() => {
       this.listEl.classList.add('spin-wheel');
     },1)
-    this.listEl.addEventListener('animationend', () => {
-      this.currAngle = endAngle % 2*Math.PI;
-    });
+  },
+  
+  onSpinEnd(name) {
+    this.listEl.querySelector(`#${name}`).classList.add('selected');
+    console.log(name);
   }
 });
 
@@ -53,4 +61,5 @@ document.forms.names.addEventListener(
     e.target.elements.add.value = "";
   }
 );
-document.forms.names.elements.spin.addEventListener('click', model.selectName)
+document.querySelector('.names').addEventListener('click', model.spinStart);
+document.querySelector('.names').addEventListener('animationend', model.spinEnd);
