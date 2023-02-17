@@ -1,4 +1,4 @@
-export default function NamesModelFactory(client, options = {}) {
+export default function Names(client, options = {}) {
   const { storageKey } = options || "names";
   let names = new Set();
   let selected = null;
@@ -8,20 +8,20 @@ export default function NamesModelFactory(client, options = {}) {
     names.forEach((value, key) => {
       client.onAdd(key, value);
     });
-    updateCount();
+    update();
   }
 
   function save() {
     console.log(JSON.stringify([...names]));
     localStorage.setItem(storageKey, JSON.stringify([...names]));
-    updateCount();
+    update();
   }
 
-  function updateCount() {
+  function update() {
     client.onCountChange(names.size);
   }
 
-  function addName(name) {
+  function add(name) {
     if (!names.has(name)) {
       names.add(name);
       client.onAdd(name);
@@ -29,27 +29,27 @@ export default function NamesModelFactory(client, options = {}) {
     }
   }
 
-  function deleteName(name) {
+  function remove(name) {
     names.delete(name);
     client.onDelete(name);
     save();
   }
 
-  function clearNames() {
+  function clear() {
     client.onClearNames([...names]);
     names = new Set();
     save();
   }
 
-  function spinStart() {
-    const index = Math.floor(Math.random()*names.size)
+  function select() {
+    const index = Math.floor(Math.random()*names.size);
     console.log(index);
     selected = [...names][index];
     client.onSpinStart(index);
   }
 
-  function spinEnd() {
+  function reveal() {
     client.onSpinEnd(selected);
   }
-  return Object.freeze({ addName, deleteName, clearNames, spinStart, spinEnd });
+  return Object.freeze({ add, remove, clear, select, reveal });
 }

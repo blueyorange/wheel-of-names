@@ -1,6 +1,6 @@
-import NamesModelFactory from "./names-model.js";
+import Names from "./names-model.js";
 
-const model = NamesModelFactory({
+const model = Names({
   listEl: document.querySelector('.names'),
   currAngle: 0,
   onAdd(name) {
@@ -61,5 +61,5 @@ document.forms.names.addEventListener(
     e.target.elements.add.value = "";
   }
 );
-document.querySelector('.names').addEventListener('click', model.spinStart);
-document.querySelector('.names').addEventListener('animationend', model.spinEnd);
+document.querySelector('.names').addEventListener('click', model.select);
+document.querySelector('.names').addEventListener('animationend', model.reveal);
