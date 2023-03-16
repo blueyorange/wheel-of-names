@@ -1,6 +1,6 @@
 :root {
   --count: 0;
-  --angle-offset: calc(1turn / var(--count));
+  --angle-offset: calc(360deg / var(--count));
   --diameter: 490px;
   --start-angle: 0turn;
   --end-angle: 5turn;
@@ -61,9 +61,9 @@ body {
     100% 100%,
     var(--indent) 100%
   );
+  --angle: calc(var(--nth-sibling) * var(--angle-offset));
   transform: rotate(calc(var(--nth-sibling) * var(--angle-offset)));
-  --hue: calc(360deg / var(--nth-sibling));
-  background-color: hsl(var(--hue), 65%, 50%);
+  background-color: hsl(var(--angle), 65%, 50%);
 }
 .names .selected {
   filter: brightness(200%);
