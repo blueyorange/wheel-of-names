@@ -10,16 +10,18 @@
   </head>
   <body>
     <header class="header">
-      <h1>Wheel of Names</h1>
+      <h1>Select-o-matic</h1>
     </header>
     <main>
       <section class="namesapp">
         <form name="names">
-          <input type="text" name="add" placeholder="Enter name"/>
+          <label for="wheel-on">
+            <input name="wheel-on" id="wheel-on" type="checkbox" />Wheelify
+          </label>
+          <input type="text" name="add" placeholder="Enter name" />
           <button type="button" name="clear">Clear names</button>
         </form>
-        <ul class="names">
-        </ul>
+        <ul class="names"></ul>
       </section>
     </main>
   </body>

@@ -21,17 +21,8 @@ const names = Names({
 
   onCountChange(count) {
     [...this.listEl.children].forEach((nameElement, n) => {
-      let x = 50 * (1 / Math.tan(3.14 / count) + 1);
-      nameElement.style.setProperty(
-        "clip-path",
-        `polygon(50% 50%, ${x}% 0%, 100% 0%, 100% 100%, ${x}% 100%)`
-      );
-      nameElement.style.setProperty("transform", `rotate(${n / count}turn)`);
-      let hue = Math.floor(360 / n);
-      nameElement.style.setProperty(
-        "background-color",
-        `hsl(${hue}, 100%, 50%)`
-      );
+      document.querySelector(":root").style.setProperty("--count", count);
+      nameElement.style.setProperty("--nth-sibling", n + 1);
     });
   },
 
