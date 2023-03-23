@@ -1,4 +1,5 @@
-export default function Names(client, options = {}) {
+export default function Names(options = {}) {
+  const obj = {};
   const { storageKey } = options || "names";
   let names = new Set();
   let selected = null;
@@ -8,48 +9,37 @@ export default function Names(client, options = {}) {
     names.forEach((value, key) => {
       client.onAdd(key, value);
     });
-    update();
   }
 
-  function save() {
-    console.log(JSON.stringify([...names]));
-    localStorage.setItem(storageKey, JSON.stringify([...names]));
-    update();
-  }
+  return Object.freeze({
+    get() {
+      return names;
+    },
 
-  function update() {
-    client.onCountChange(names.size);
-  }
+    save() {
+      console.log(JSON.stringify([...names]));
+      localStorage.setItem(storageKey, JSON.stringify([...names]));
+      obj.dispatchEvent(new CustomEvent("save"));
+    },
 
-  function add(name) {
-    if (!names.has(name)) {
-      names.add(name);
-      client.onAdd(name);
+    add() {
+      if (!names.has(name)) {
+        names.add(name);
+        client.onAdd(name);
+        save();
+      }
+    },
+
+    remove(name) {
+      names.delete(name);
+      client.onDelete(name);
       save();
-    }
-  }
+    },
 
-  function remove(name) {
-    names.delete(name);
-    client.onDelete(name);
-    save();
-  }
-
-  function clear() {
-    client.onClearNames([...names]);
-    names = new Set();
-    save();
-  }
-
-  function select() {
-    const index = Math.floor(Math.random()*names.size);
-    console.log(index);
-    selected = [...names][index];
-    client.onSpinStart(index);
-  }
-
-  function reveal() {
-    client.onSpinEnd(selected);
-  }
-  return Object.freeze({ add, remove, clear, select, reveal });
+    clear() {
+      client.onClearNames([...names]);
+      names = new Set();
+      save();
+    },
+  });
 }
