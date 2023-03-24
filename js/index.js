@@ -9,7 +9,7 @@ function App() {
   };
 
   let currAngle = 0;
-  let names = new Names(render);
+  const names = Names(render);
   window.addEventListener("submit", (e) => e.preventDefault({ capture: true }));
   $.input.addEventListener("submit", (e) => {
     addName(e.target.elements.input.value);
@@ -50,16 +50,15 @@ function App() {
   }
 
   function render() {
-    console.log("render");
-    $.names.replaceChildren(...[...names].map((item) => createNameItem(item)));
-    document.querySelector(":root").style.setProperty("--count", names.size);
+    $.names.replaceChildren(...names.get().map((item) => createNameItem(item)));
+    document.querySelector(":root").style.setProperty("--count", names.count);
     [...$.names.children].forEach(($name, n) => {
       $name.style.setProperty("--nth-sibling", n + 1);
     });
   }
 }
 
-const app = App();
+App();
 
 // const names = Names({
 //   listEl: document.querySelector(".names"),

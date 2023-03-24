@@ -1,33 +1,41 @@
-export default class Names extends Set {
-  #storageKey = "names";
-  constructor(cb) {
-    const storageKey = "names";
-    const asJson = localStorage.getItem(storageKey);
-    if (asJson) {
-      try {
-        super(JSON.parse(asJson));
-      } catch {
-        console.log("localStorage data not iterable");
-      }
-    } else {
-      super();
+export default function Names(cb) {
+  const names = new Set();
+  const storageKey = "names";
+  const asJson = localStorage.getItem(storageKey);
+
+  if (asJson) {
+    try {
+      JSON.parse(asJson).forEach((name) => names.add(name));
+    } catch {
+      console.log("localStorage data not iterable");
+      localStorage.clear(storageKey);
     }
-    this.storageKey = storageKey;
-    this.cb = cb;
+  }
+  function save() {
+    localStorage.setItem(storageKey, JSON.stringify(storageKey));
+    cb();
   }
 
-  save() {
-    localStorage.setItem(this.#storageKey, JSON.stringify(this.#storageKey));
-    this.cb();
+  function add(name) {
+    names.add(name);
+    save();
   }
 
-  add(name) {
-    super.add(name);
-    this.save();
+  function clear() {
+    names.clear();
+    save();
   }
 
-  clear() {
-    super.clear();
-    this.save();
+  function get() {
+    return Object.freeze([...names.values()]);
   }
+
+  return Object.freeze({
+    get,
+    add,
+    clear,
+    get count() {
+      return get().length;
+    },
+  });
 }
