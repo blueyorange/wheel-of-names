@@ -1,16 +1,51 @@
 :root {
   --count: 0;
   --angle-offset: calc(360deg / var(--count));
-  --diameter: 490px;
+  --diameter: 75vw;
   --start-angle: 0turn;
   --end-angle: 0turn;
   --turn-duration: 1s;
+  --steel-blue: hsla(211, 65%, 50%, 1);
+  --yellow-green: hsla(76, 96%, 41%, 1);
+  --saffron: hsla(47, 98%, 47%, 1);
+  --persimmon: hsla(23, 99%, 48%, 1);
+  --davys-gray: hsla(300, 1%, 28%, 1);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--davys-gray);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
-.wheelapp ul {
-  list-style: none;
+.main-header {
+  padding: 0;
+  margin: 0;
+  background-color: var(--saffron);
+}
+h1 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color: var(--davys-gray);
+  padding: 0.4em;
+}
+.namesapp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: center;
+}
+.namesapp .wheel {
+  padding-top: 5vw;
+  height: var(--diameter);
+  width: var(--diameter);
 }
 .namesapp .names {
   color: black;
@@ -18,10 +53,9 @@ body {
 .namesapp:has(#wheel-on:checked) .names {
   z-index: -1;
   list-style: none;
-  background-color: lightgrey;
+  background-color: black;
   padding: 0;
   margin: 0;
-  top: 150px;
   transform-origin: center;
   height: var(--diameter);
   width: var(--diameter);
@@ -41,7 +75,7 @@ body {
   width: 75px;
   height: 75px;
   border-radius: 100%;
-  background-color: white;
+  background-color: var(--light-orange);
 }
 
 .namesapp:has(#wheel-on:checked) .names li {
@@ -69,17 +103,20 @@ body {
 }
 
 .namesapp:has(#wheel-on:checked) .names li:nth-child(4n) {
-  background-color: red;
+  background-color: var(--steel-blue);
+  color: white;
 }
 .namesapp:has(#wheel-on:checked) .names li:nth-child(4n + 1) {
-  background-color: green;
+  background-color: var(--yellow-green);
+  color: var(--davys-gray);
 }
 .namesapp:has(#wheel-on:checked) .names li:nth-child(4n + 2) {
-  background-color: blue;
+  background-color: var(--saffron);
+  color: var(--davys-gray);
 }
 .namesapp:has(#wheel-on:checked) .names li:nth-child(4n + 3) {
-  background-color: yellow;
-  color: black;
+  background-color: var(--persimmon);
+  color: white;
 }
 
 @keyframes turn {

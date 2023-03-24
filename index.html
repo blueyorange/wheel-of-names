@@ -9,28 +9,37 @@
     <script src="./js/index.js" type="module"></script>
   </head>
   <body>
-    <header class="header">
+    <header class="main-header">
       <h1>Select-o-matic</h1>
     </header>
     <main>
-      <section class="namesapp">
-        <form data-names="input">
-          <label for="wheel-on"> </label>
+      <div class="namesapp">
+        <div class="wheel">
+          <ul class="names" data-names="names"></ul>
+        </div>
+        <div class="controls">
+          <form data-names="input">
+            <label for="wheel-on"> </label>
+            <input
+              type="text"
+              name="input"
+              placeholder="Enter name"
+              autocomplete="off"
+            />
+            <button type="submit">Add</button>
+          </form>
           <input
-            type="text"
-            name="input"
-            placeholder="Enter name"
-            autocomplete="off"
-          />
-          <button type="submit">Add</button>
-        </form>
-        <input name="wheelify" id="wheel-on" type="checkbox" checked />Wheelify
-        <button type="button" name="clear" data-names="clear">
-          Clear names
-        </button>
-        <ul class="names" data-names="names"></ul>
-        <button data-names="spin">Spin</button>
-      </section>
+            name="wheelify"
+            id="wheel-on"
+            type="checkbox"
+            checked
+          />Wheelify
+          <button type="button" name="clear" data-names="clear">
+            Clear names
+          </button>
+          <button data-names="spin">Spin</button>
+        </div>
+      </div>
     </main>
   </body>
 </html>
