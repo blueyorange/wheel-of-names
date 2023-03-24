@@ -1,46 +1,65 @@
 import Names from "./names-model.js";
 
-const names = Names();
-
-const App = {
-  $: {
-    add: document.querySelector('[data-names="input"]'),
+function App() {
+  const $ = {
+    input: document.querySelector('[data-names="input"]'),
     clear: document.querySelector('[data-names="clear"]'),
     names: document.querySelector('[data-names="names"]'),
-  },
+    spin: document.querySelector('[data-names="spin"]'),
+  };
 
-  init() {
-    window.addEventListener("submit", (e) =>
-      e.preventDefault({ capture: true })
-    );
-    window.addEventListener("save", App.render);
-    App.$.add.addEventListener("submit", (e) => {
-      App.onAddName(e.target.elements.input.value);
-      e.target.elements.input.value = "";
-    });
-    App.$.clear.addEventListener("click", App.clearNames);
-    App.$.names.addEventListener("click", App.spin);
-  },
+  let currAngle = 0;
+  let names = new Names(render);
+  window.addEventListener("submit", (e) => e.preventDefault({ capture: true }));
+  $.input.addEventListener("submit", (e) => {
+    addName(e.target.elements.input.value);
+    e.target.elements.input.value = "";
+  });
+  $.clear.addEventListener("click", () => names.clear());
+  $.spin.addEventListener("click", spin);
+  render();
 
-  onAddName(name) {
+  function addName(name) {
+    console.log(name);
     names.add(name);
-  },
+  }
 
-  createNameItem(name) {
+  function createNameItem(name) {
     const newNameEl = document.createElement("li");
     newNameEl.id = name;
     newNameEl.innerText = name;
     return newNameEl;
-  },
+  }
 
-  render() {
-    App.$.names.replaceChildren(
-      ...names.get().map((item) => App.createNameItem(item))
-    );
-  },
-};
+  function spin() {
+    const index = Math.floor(Math.random() * names.size);
+    const endAngle = currAngle + index / names.size;
+    console.log("index", index);
+    console.log(`currAngle: ${currAngle}; endAngle: ${endAngle}`);
+    document
+      .querySelector(":root")
+      .style.setProperty("--start-angle", `${currAngle}turn`);
+    document
+      .querySelector(":root")
+      .style.setProperty("--end-angle", `${endAngle}turn`);
+    currAngle = endAngle % 1;
+    $.names.classList.remove("spin-wheel");
+    setTimeout(() => {
+      $.names.classList.add("spin-wheel");
+    }, 1);
+  }
 
-App.init();
+  function render() {
+    console.log("render");
+    $.names.replaceChildren(...[...names].map((item) => createNameItem(item)));
+    document.querySelector(":root").style.setProperty("--count", names.size);
+    [...$.names.children].forEach(($name, n) => {
+      $name.style.setProperty("--nth-sibling", n + 1);
+    });
+  }
+}
+
+const app = App();
 
 // const names = Names({
 //   listEl: document.querySelector(".names"),
@@ -63,25 +82,7 @@ App.init();
 //   },
 
 //   onSpinStart(index) {
-//     [...this.listEl.children].forEach((el) => el.classList.remove("selected"));
-//     const minimumTurns = 5;
-//     const length = [...this.listEl.children].length;
-//     const angleOffset =
-//       Math.random() / (2 * length) - Math.random() / (4 * length);
-//     const endAngle = angleOffset - index / length + minimumTurns;
-//     console.log("index", index);
-//     console.log(`currAngle: ${this.currAngle}; endAngle: ${endAngle}`);
-//     document
-//       .querySelector(":root")
-//       .style.setProperty("--start-angle", `${this.currAngle}turn`);
-//     document
-//       .querySelector(":root")
-//       .style.setProperty("--end-angle", `${endAngle}turn`);
-//     this.currAngle = endAngle % 1;
-//     this.listEl.classList.remove("spin-wheel");
-//     setTimeout(() => {
-//       this.listEl.classList.add("spin-wheel");
-//     }, 1);
+
 //   },
 
 //   onSpinEnd(name) {
