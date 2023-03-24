@@ -7,12 +7,12 @@ export default function Names(cb) {
     try {
       JSON.parse(asJson).forEach((name) => names.add(name));
     } catch {
-      console.log("localStorage data not iterable");
+      console.log("Error: localStorage data not iterable");
       localStorage.clear(storageKey);
     }
   }
   function save() {
-    localStorage.setItem(storageKey, JSON.stringify(storageKey));
+    localStorage.setItem(storageKey, JSON.stringify([...names]));
     cb();
   }
 
