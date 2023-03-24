@@ -32,8 +32,8 @@ function App() {
   }
 
   function spin() {
-    const index = Math.floor(Math.random() * names.size);
-    const endAngle = currAngle + index / names.size;
+    const index = Math.floor(Math.random() * names.count);
+    const endAngle = currAngle + index / names.count;
     console.log("index", index);
     console.log(`currAngle: ${currAngle}; endAngle: ${endAngle}`);
     document
