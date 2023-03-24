@@ -64,6 +64,7 @@ body {
   --angle: calc(var(--nth-sibling) * var(--angle-offset));
   transform: rotate(calc(var(--nth-sibling) * var(--angle-offset)));
   background-color: hsl(var(--angle), 65%, 50%);
+  padding-right: 1em;
 }
 .names .selected {
   filter: brightness(200%);
