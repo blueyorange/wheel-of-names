@@ -2,7 +2,7 @@ import Names from "./names-model.js";
 
 function App() {
   const $ = {
-    input: document.querySelector('[data-names="input"]'),
+    input: document.forms.input,
     clear: document.querySelector('[data-names="clear"]'),
     names: document.querySelector('[data-names="names"]'),
     spin: document.querySelector('[data-names="spin"]'),
