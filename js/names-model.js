@@ -18,7 +18,7 @@ export default function Names(cb) {
 
   function isValid(name) {
     // reject empty string or whitespace
-    return /^\s*$/.test(name);
+    return !/^\s*$/.test(name);
   }
 
   function add(name) {
