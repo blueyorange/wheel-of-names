@@ -47,11 +47,12 @@ h1 {
   flex-wrap: wrap;
   align-items: center;
   transform-origin: center;
-  padding: 50px;
+  padding: 5vh;
 }
 .namesapp .wheel {
   height: var(--diameter);
   width: var(--diameter);
+  margin-bottom: 5vh;
 }
 .namesapp .names {
   color: black;
