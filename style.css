@@ -1,14 +1,16 @@
 :root {
   --count: 0;
   --angle-offset: calc(360deg / var(--count));
-  --diameter: 75vw;
+  --diameter: 400px;
   --start-angle: 0turn;
   --end-angle: 0turn;
-  --turn-duration: 1s;
+  --turn-duration: 3s;
+  --text-height: 40px;
   --steel-blue: hsla(211, 65%, 50%, 1);
   --yellow-green: hsla(76, 96%, 41%, 1);
   --saffron: hsla(47, 98%, 47%, 1);
   --persimmon: hsla(23, 99%, 48%, 1);
+  --persimmon-border: hsla(23, 99%, 65%, 1);
   --davys-gray: hsla(300, 1%, 28%, 1);
 }
 * {
@@ -29,6 +31,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: var(--saffron);
+  background: linear-gradient(0, var(--davys-gray), var(--saffron));
 }
 h1 {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -38,12 +41,15 @@ h1 {
 }
 .namesapp {
   display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-around;
+  flex: 400px;
+  flex-wrap: wrap;
   align-items: center;
   transform-origin: center;
+  padding: 50px;
 }
 .namesapp .wheel {
-  padding-top: 5vw;
   height: var(--diameter);
   width: var(--diameter);
 }
@@ -51,7 +57,6 @@ h1 {
   color: black;
 }
 .namesapp:has(#wheel-on:checked) .names {
-  z-index: -1;
   list-style: none;
   background-color: black;
   padding: 0;
@@ -62,6 +67,7 @@ h1 {
   position: absolute;
   border-radius: 100%;
   overflow: hidden;
+  border: 2px solid black;
 }
 .namesapp:has(#wheel-on:checked) .names::after {
   content: "";
@@ -75,9 +81,16 @@ h1 {
   width: 75px;
   height: 75px;
   border-radius: 100%;
-  background-color: var(--light-orange);
+  background-color: var(--davys-gray);
+  transform: rotate(var(--start-angle));
 }
-
+.namesapp .names {
+  list-style-type: none;
+}
+.namesapp .names li {
+  width: 100%;
+  height: 2em;
+}
 .namesapp:has(#wheel-on:checked) .names li {
   box-sizing: border-box;
   display: block;
@@ -88,7 +101,7 @@ h1 {
   transform-origin: center;
   position: absolute;
   text-align: right;
-  font-size: 1.5em;
+  font-size: var(--text-height);
   --indent: calc(50% * (1 / tan(3.14 / var(--count)) + 1));
   clip-path: polygon(
     50% 50%,
@@ -119,6 +132,13 @@ h1 {
   color: white;
 }
 
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 25px 0 25px;
+}
+
 @keyframes turn {
   0% {
     transform: rotate(var(--start-angle));
@@ -129,7 +149,38 @@ h1 {
 }
 .namesapp:has(#wheel-on:checked) .spin-wheel {
   animation-name: turn;
-  animation-timing-function: ease-out;
+  /* animation-timing-function: ease-out; */
   animation-duration: var(--turn-duration);
   animation-fill-mode: forwards;
+}
+input,
+button,
+label {
+  font-size: 1.5em;
+  padding: 0.2em 0.3em;
+  border: none;
+  border-radius: 0.2em;
+}
+label {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+.input-name {
+  margin-bottom: 10px;
+  line-height: 2em;
+  padding: 0.2em 0.3em;
+}
+button {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--persimmon);
+  border: 4px solid var(--persimmon-border);
+  font-family: sans-serif;
+  color: white;
+  line-height: 2em;
+  margin-bottom: 10px;
+}
+button:hover {
+  background-color: var(--persimmon-border);
 }
