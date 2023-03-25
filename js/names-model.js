@@ -16,9 +16,16 @@ export default function Names(cb) {
     cb();
   }
 
+  function isValid(name) {
+    // reject empty string or whitespace
+    return /^\s*$/.test(name);
+  }
+
   function add(name) {
-    names.add(name);
-    save();
+    if (isValid(name)) {
+      names.add(name);
+      save();
+    }
   }
 
   function clear() {
