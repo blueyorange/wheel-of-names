@@ -34,6 +34,9 @@ function App() {
   }
 
   function spin() {
+    for (let child of $.names.children) {
+      child.classList.remove("selected");
+    }
     index = Math.floor(Math.random() * names.count);
     const endAngle = -1 - index / names.count;
     console.log("index", index);
@@ -52,7 +55,9 @@ function App() {
   }
 
   function spinEnd() {
-    console.log([...names.get()][index]);
+    const winner = [...names.get()][index];
+    console.log($.names.querySelector(`#${winner}`));
+    $.names.querySelector(`#${winner}`).classList.add("selected");
   }
 
   function render() {
