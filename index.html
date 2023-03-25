@@ -16,25 +16,28 @@
       <section class="wheel">
         <ul class="names" data-names="names"></ul>
       </section>
-      <form data-names="input" class="controls">
-        <label for="wheel-on">
+      <section class="controls">
+        <form data-names="input" id="input">
           <input
-            name="wheelify"
-            id="wheel-on"
-            type="checkbox"
-            checked
-          />Wheelify
-        </label>
-        <input
-          class="input-name"
-          type="text"
-          name="input"
-          placeholder="Enter name"
-          autocomplete="off"
-        />
+            class="input-name"
+            type="text"
+            name="input"
+            placeholder="Enter name"
+            autocomplete="off"
+          />
+        </form>
         <button type="button" name="clear" data-names="clear">Clear</button>
         <button data-names="spin">Spin</button>
-      </form>
+                <form data-names="input">
+          <label for="wheel-on">
+            <input
+              name="wheelify"
+              id="wheel-on"
+              type="checkbox"
+              checked
+            />Wheelify
+          </label>
+      </section>
     </main>
   </body>
 </html>
