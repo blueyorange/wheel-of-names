@@ -5,7 +5,6 @@ function App() {
     input: document.forms.input,
     clear: document.querySelector('[data-names="clear"]'),
     names: document.querySelector('[data-names="names"]'),
-    spin: document.querySelector('[data-names="spin"]'),
   };
 
   let currAngle = 0;
@@ -17,7 +16,7 @@ function App() {
     e.target.elements.input.value = "";
   });
   $.clear.addEventListener("click", () => names.clear());
-  $.spin.addEventListener("click", spin);
+  $.names.addEventListener("click", spin);
   $.names.addEventListener("animationend", spinEnd);
   render();
 
